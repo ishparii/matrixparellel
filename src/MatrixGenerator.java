@@ -17,9 +17,4 @@ public class MatrixGenerator {
         }
         return matrix;
     }
-
-//    public int[][] getMatrix() {
-//        return matrix;
-//    }
-
 }
