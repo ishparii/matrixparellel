@@ -33,7 +33,7 @@ public class StaticScheduling {
     public static void main(String[] args) {
         //parameters to change for testing
         int numOfCores = 2;     //1,2,3,..., 8
-        int matrixSize = 3;
+        int matrixSize = 5;
 
         StaticScheduling staticScheduling = new StaticScheduling(matrixSize);
         Thread[] threads = new Thread[numOfCores];
@@ -48,12 +48,14 @@ public class StaticScheduling {
             int end = granularity;
 
             for (int i=0; i<numOfCores; i++) {
+                //for last thread to take the rest of the matrix
+                if (i == (numOfCores-1)) {
+                    end = matrixSize;
+                }
                 threads[i] = new Thread(new StaticThread(staticScheduling.A, staticScheduling.B, staticScheduling.C, start, end, staticScheduling.matrixSize));
                 start = end;
                 end = end + granularity;
-                if (i == numOfCores-1) {
-                    end = matrixSize;
-                }
+
             }
         }
 
