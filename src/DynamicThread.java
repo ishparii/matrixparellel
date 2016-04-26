@@ -7,6 +7,7 @@ public class DynamicThread implements Runnable {
     int[][] C;
     static int row;
     int size;
+    private static Object lock = new Object();
 
     public DynamicThread(int[][] A, int[][] B, int[][] C, int size) {
         this.A = A;
@@ -17,8 +18,12 @@ public class DynamicThread implements Runnable {
 
     @Override
     public void run() {
-        int i = 0;
+        int i;
         while (row < size) {
+            synchronized (lock) {
+                i = row;
+                row++;
+            }
             for (int j=0; j<size; j++) {
                 for (int k=0; k<size; k++) {
                     C[i][j] = C[i][j] + (A[i][k]*B[k][j]);
