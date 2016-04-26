@@ -3,17 +3,15 @@
  */
 public class StaticScheduling {
 
-    int numOfCores;
     int matrixSize;
     static int[][] A;
     static int[][] B;
     static int[][] C;
 
-    public StaticScheduling(int cores, int size) {
-        numOfCores = cores;
+    public StaticScheduling(int size) {
         matrixSize = size;
-        A = MatrixGenerator.generate(size);
-        B = MatrixGenerator.generate(size);
+        A = MatrixGenerator.matrixInit(size);
+        B = MatrixGenerator.matrixInit(size);
         C = new int[size][size];
     }
 
@@ -33,12 +31,30 @@ public class StaticScheduling {
     }
 
     public static void main(String[] args) {
-        StaticScheduling staticScheduling = new StaticScheduling(1, 3);
+        //parameters to change for testing
+        int numOfCores = 2;     //1,2,3,..., 8
+        int matrixSize = 3;
 
-        Thread[] threads = new Thread[1];
+        StaticScheduling staticScheduling = new StaticScheduling(matrixSize);
+        Thread[] threads = new Thread[numOfCores];
 
-        for (int i=0; i<threads.length; i++) {
-            threads[i] = new Thread(new StaticThread(staticScheduling.A, staticScheduling.B, staticScheduling.C, 0, 3, staticScheduling.matrixSize));
+        int granularity = matrixSize/numOfCores;
+
+        if (numOfCores == 1) {
+            threads[0] = new Thread(new StaticThread(staticScheduling.A, staticScheduling.B, staticScheduling.C, 0, matrixSize, staticScheduling.matrixSize));
+        } else {
+            //indices for dividing matrix into chunks
+            int start = 0;
+            int end = granularity;
+
+            for (int i=0; i<numOfCores; i++) {
+                threads[i] = new Thread(new StaticThread(staticScheduling.A, staticScheduling.B, staticScheduling.C, start, end, staticScheduling.matrixSize));
+                start = end;
+                end = end + granularity;
+                if (i == numOfCores-1) {
+                    end = matrixSize;
+                }
+            }
         }
 
         for (Thread thread : threads) {

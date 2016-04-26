@@ -7,7 +7,7 @@ import java.util.Random;
 public class MatrixGenerator {
 
 
-    public static int[][] generate(int n) {
+    public static int[][] matrixInit(int n) {
         int[][] matrix = new int[n][n];
         Random r = new Random();
         for(int i = 0; i < n; i ++) {
