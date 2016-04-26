@@ -48,12 +48,12 @@ public class StaticScheduling {
             int end = granularity;
 
             for (int i=0; i<numOfCores; i++) {
-                threads[i] = new Thread(new StaticThread(staticScheduling.A, staticScheduling.B, staticScheduling.C, start, end, staticScheduling.matrixSize));
-                start = end;
-                end = end + granularity;
                 if (i == numOfCores-1) {
                     end = matrixSize;
                 }
+                threads[i] = new Thread(new StaticThread(staticScheduling.A, staticScheduling.B, staticScheduling.C, start, end, staticScheduling.matrixSize));
+                start = end;
+                end = end + granularity;
             }
         }
 
@@ -80,8 +80,5 @@ public class StaticScheduling {
         System.out.println("Matrix C:");
         staticScheduling.displayC();
         System.out.println();
-
     }
-
-
 }
