@@ -14,22 +14,16 @@ public class DynamicScheduling {
         C = new int[size][size];
     }
 
-    public void displayA() {
-        display(A);
-    }
+    public void displayA() {display(A);}
 
-    public void displayB() {
-        display(B);
-    }
+    public void displayB() {display(B);}
 
-    public void displayC() {
-        display(C);
-    }
+    public void displayC() {display(C);}
 
     private void display(int[][] matrix) {
-        for (int i = 0; i < matrixSize; i++) {
-            for (int j = 0; j < matrixSize; j++)
-                System.out.print(matrix[i][j] + "\t");
+        for (int i = 0 ; i < matrixSize ; i++ ) {
+            for (int j = 0 ; j < matrixSize ; j++ )
+                System.out.print(matrix[i][j]+"\t");
 
             System.out.print("\n");
         }
@@ -43,15 +37,14 @@ public class DynamicScheduling {
         DynamicScheduling dynamicScheduling = new DynamicScheduling(matrixSize);
         Thread[] threads = new Thread[numOfCores];
 
-        if (numOfCores == 1) {
-//            threads[0] = new Thread(new DynamicThread(dynamicScheduling.A, dynamicScheduling.B, dynamicScheduling.C, 0, matrixSize, dynamicScheduling.matrixSize));
-        } else {
-            for (int i = 0; i < numOfCores; i++) {
-                //for last thread to take the rest of the matrix
-                threads[i] = new Thread(new DynamicThread(dynamicScheduling.A, dynamicScheduling.B, dynamicScheduling.C, dynamicScheduling.matrixSize));
+//        if (numOfCores == 1) {
+//            threads[0] = new Thread(new DynamicThread(dynamicScheduling.A, dynamicScheduling.B, dynamicScheduling.C,  dynamicScheduling.matrixSize));
+//        }
 
-            }
+        for (int i=0; i<numOfCores; i++) {
+            threads[i] = new Thread(new DynamicThread(dynamicScheduling.A, dynamicScheduling.B, dynamicScheduling.C, dynamicScheduling.matrixSize));
         }
+
 
         for (Thread thread : threads) {
             thread.run();
