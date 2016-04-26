@@ -5,19 +5,21 @@ import java.util.Random;
  */
 
 public class MatrixGenerator {
-    int[][] matrix;
-    Random r = new Random();
 
-    public MatrixGenerator(int n) {
+
+    public static int[][] generate(int n) {
+        int[][] matrix = new int[n][n];
+        Random r = new Random();
         for(int i = 0; i < n; i ++) {
             for (int j = 0; j < n; j ++) {
-                matrix[i][j] = r.nextInt(100);
+                matrix[i][j] = r.nextInt(5);
             }
         }
-    }
-
-    public int[][] getMatrix() {
         return matrix;
     }
+
+//    public int[][] getMatrix() {
+//        return matrix;
+//    }
 
 }
