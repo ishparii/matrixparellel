@@ -1,4 +1,9 @@
+import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 /**
 * Created by annezhao on 4/26/16.
 */
@@ -23,12 +28,14 @@ public static void main(String[] args) {
         matrixSize = keyboard.nextInt();
     }
 
+    //ExecutorService exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     Thread[] threads = new Thread[numOfCores];
 
     //Static Scheduling
 
     StaticScheduling staticScheduling = new StaticScheduling(matrixSize);
     int granularity = matrixSize/numOfCores;
+
 
     if (numOfCores == 1) {
         threads[0] = new Thread(new StaticThread(staticScheduling.A, staticScheduling.B, staticScheduling.C, 0, matrixSize, staticScheduling.matrixSize));
@@ -53,7 +60,7 @@ public static void main(String[] args) {
     long startTime = System.nanoTime();
 
     for (Thread thread : threads) {
-        thread.run();
+        thread.start();
     }
 
     for (Thread thread : threads) {
@@ -93,7 +100,7 @@ public static void main(String[] args) {
     startTime = System.nanoTime();
 
     for (Thread thread : threads) {
-        thread.run();
+        thread.start();
     }
 
     for (Thread thread : threads) {
