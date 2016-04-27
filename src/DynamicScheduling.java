@@ -37,14 +37,9 @@ public class DynamicScheduling {
         DynamicScheduling dynamicScheduling = new DynamicScheduling(matrixSize);
         Thread[] threads = new Thread[numOfCores];
 
-//        if (numOfCores == 1) {
-//            threads[0] = new Thread(new DynamicThread(dynamicScheduling.A, dynamicScheduling.B, dynamicScheduling.C,  dynamicScheduling.matrixSize));
-//        }
-
         for (int i=0; i<numOfCores; i++) {
             threads[i] = new Thread(new DynamicThread(dynamicScheduling.A, dynamicScheduling.B, dynamicScheduling.C, dynamicScheduling.matrixSize));
         }
-
 
         for (Thread thread : threads) {
             thread.run();
